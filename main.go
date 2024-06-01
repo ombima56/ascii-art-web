@@ -4,6 +4,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+
+	Ascii "ascii-art-wed/banner"
 )
 
 // Template to render the form
@@ -42,14 +44,12 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	// Get form values
 	inputText := r.Form.Get("inputText")
 	banner := r.Form.Get("banner")
-
-	// Generate ASCII art (you need to implement this)
-	// asciiArt := generateASCIIArt(inputText, banner)
+	
+	Ascii.PrintBanner(banner)
 
 	// Send response
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(http.StatusOK)
 	// Replace the following line with sending the generated ASCII art
 	w.Write([]byte("<h1>ASCII Art:</h1><pre>" + inputText + "</pre>"))
-
 }
