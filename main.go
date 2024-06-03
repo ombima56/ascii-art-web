@@ -4,52 +4,49 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 
 	Ascii "ascii-art-wed/banner"
+	// Ascii "ascii-art-wed/banner"
 )
+
+type Content struct {
+	Message string
+}
 
 // Template to render the form
 var formTemplate = template.Must(template.ParseFiles("form.html"))
 
 func main() {
 	// Define HTTP routes
-	http.HandleFunc("/form", formHandler)
-	http.HandleFunc("/submit", submitHandler)
+	http.HandleFunc("/ascii", form)
+
+	http.HandleFunc("/", Index)
 
 	// Start the HTTP server
-	log.Println("Server running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	log.Println("Server running on port 8000")
+	http.ListenAndServe(":8000", nil)
 }
 
-// Handler for the form page
-func formHandler(w http.ResponseWriter, r *http.Request) {
-	// Render the form template
-	w.Header().Set("Content-Type", "text/html")
-	err := formTemplate.Execute(w, nil)
-	if err != nil {
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
+func Index(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("index.html"))
+	// http.ServeFile(w, r, "index.html")
+	tmpl.Execute(w, nil)
 }
 
-// Handler for form submission
-func submitHandler(w http.ResponseWriter, r *http.Request) {
-	// Parse form data
-	err := r.ParseForm()
-	if err != nil {
-		http.Error(w, "Error parsing form", http.StatusBadRequest)
-		return
+func form(w http.ResponseWriter, r *http.Request) {
+	name := r.FormValue("inputText")
+	namebaner := r.FormValue("banner")
+
+	tmpl := template.Must(template.ParseFiles("./form.html"))
+
+	str := strings.Split(name, "\n")
+	var data string
+	for _, wrd := range str {
+		data += Ascii.PrintBanner(wrd, namebaner)
 	}
 
-	// Get form values
-	inputText := r.Form.Get("inputText")
-	banner := r.Form.Get("banner")
-	
-	Ascii.PrintBanner(banner)
-
-	// Send response
-	w.Header().Set("Content-Type", "text/html")
-	w.WriteHeader(http.StatusOK)
-	// Replace the following line with sending the generated ASCII art
-	w.Write([]byte("<h1>ASCII Art:</h1><pre>" + inputText + "</pre>"))
+	data = "\n" + data
+	content := Content{Message: data}
+	tmpl.Execute(w, content)
 }

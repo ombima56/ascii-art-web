@@ -5,20 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Form</title>
 </head>
+<style>
+   body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 30px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h3 {
+            text-align: center;
+            color: #ffffff;
+            margin-top: 10px;
+        }
+        form {
+            text-align: left;
+            color: #ffffff;
+            margin-top: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 15px;
+        }
+        textarea {
+            width: 50%;
+            height: 60px;
+            margin-bottom: 20px;
+            padding: 5px;
+            border-radius: 2px;
+        }
+        select, button {
+            margin-top: 10px;
+            padding: 8px 20px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        select {
+            width: 15%;
+        }
+        button:hover {
+            background-color: wheat;
+        }
+        .content {
+            margin-top: 10px;
+            background-color: black;
+            padding: 10px;
+            border-radius: 2px solid #ccc;
+        }
+        .header {
+            background-color: black;
+            padding: 10px;
+            border-radius: 2px solid green;
+        }
+        .header h3 {
+            margin: 0;
+            color: white;
+        }
+</style>
 <body>
-    <h1>ASCII Art Generator</h1>
-    <form action="/submit" method="post">
-        <label for="inputText">Enter Text:</label>
-        <input type="text" id="inputText" name="inputText">
-        <br>
-        <label for="banner">Choose Banner:</label>
-        <select id="banner" name="banner">
-            <option value="standard">Standard</option>
-            <option value="shadow">Shadow</option>
-            <option value="thinkertoy">Thinkertoy</option>
-        </select>
-        <br>
-        <button type="submit">Generate ASCII Art</button>
-    </form>
+    <div class="header">
+        <h3>ASCII Art Generator</h3>
+    </div>
+    <div class="content">
+        <form method="post" id="Ascii" >
+            <label for="inputText">Enter Text:</label>
+            <textarea  name="inputText" placeholder="Type something" for="Ascii"></textarea>
+            <br>
+            <label for="banner">Choose Banner:</label>
+            <select id="banner" name="banner">
+                <option value="standard">Standard</option>
+                <option value="shadow">Shadow</option>
+                <option value="thinkertoy">Thinkertoy</option>
+            </select>
+            <br>
+            <button type="submit" hx-post="/ascii" hx-target="#content">Generate ASCII Art</button>
+        </form>
+    </div>
+   
+    <div id="content">
+
+    </div>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 </body>
 </html>

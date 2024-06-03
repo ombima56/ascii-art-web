@@ -8,7 +8,7 @@ import (
 func FileCheck(fileName string) (string, error) {
 	var fileSize int64
 
-	file_info, err := os.Stat("../bannerFiles/" + fileName + ".txt")
+	file_info, err := os.Stat("./" + fileName + ".txt")
 	if err != nil {
 		return fileName, err
 	}

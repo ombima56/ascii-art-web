@@ -7,22 +7,10 @@ import (
 )
 
 // PrintBanner prints the input string using the loaded banner characters.
-func PrintBanner(line string) {
+func PrintBanner(line, filename string) string {
 	outPut := make([][]string, 8) // Output slice to store the banner lines.
-	fileName := ""
-	if len(os.Args) == 3 {
-		fileName = os.Args[2]
-	} else {
-		fileName = "standard" // Default to "standard" if no file name is provided.
-	}
-	// Checks if the banner file size is not altered.
-	filePath, err := FileCheck(fileName)
-	if err != nil {
-		fmt.Println(err, filePath)
-		os.Exit(1)
-	}
 
-	banner := LoadBanner(filePath) // Load the banner characters
+	banner := LoadBanner(filename) // Load the banner characters
 
 	for _, char := range line {
 
@@ -44,10 +32,11 @@ func PrintBanner(line string) {
 			continue
 		}
 	}
-
+	result := string('\n')
 	// Print the assembled output lines
 	for _, line := range outPut {
-		fmt.Println(strings.Join(line, ""))
+		result += (strings.Join(line, "")) + string('\n')
 	}
 
+	return result
 }

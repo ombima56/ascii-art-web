@@ -12,8 +12,8 @@ func LoadBanner(name string) map[rune]string {
 	var height int                  // Tracks the current height of the character being read
 	Banner := make(map[rune]string) // Map to store the banner characters
 	currentChar := rune(32)
-	charLine := []string{}                        // Slice to store lines of the current character
-	filePath := "../bannerFiles/" + name + ".txt" // Construct the file path
+	charLine := []string{}           // Slice to store lines of the current character
+	filePath := "./" + name + ".txt" // Construct the file path
 
 	// Open the file
 	file, err := os.Open(filePath)
@@ -76,5 +76,4 @@ func GetLine(num int, filename string) string {
 		lineNum++
 	}
 	return line
-
 }
