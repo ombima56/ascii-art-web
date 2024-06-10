@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascii Art-Web</title>
+</head>
+<body>
+    <h2>Ascii-Art-web</h2>
+    <form action="/submit" method="POST"> 
+        <fieldset>
+            <legend>Ascii-Art-Web Information</legend>
+            <p>You can generate ASCII art structure whether you select a bannerfile or not.If you don't specify one, it will display the standard.txt format as it is the default for this project.</p>
+            <label for="input-text">Input Text:</label>
+            <textarea type="message" id="input-text" name="message" placeholder="Type something" rows="4" cols="50"></textarea><br>
+        </fieldset>
+        <fieldset>
+            <legend>Select Preferred Banner File:</legend>
+            <select name="bannerfile" id="bannerfile">
+            <option value="select">--select--</option>
+            <option value="shadow">Shadow</option>
+            <option value="standard">Standard</option>
+            <option value="thinkertoy">Thinkertoy</option>
+            </select>
+        </fieldset>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

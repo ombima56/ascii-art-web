@@ -1,52 +1,51 @@
 package main
 
 import (
+	Ascii "ascii-art-wed/asciiArtFunctions"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"strings"
-
-	Ascii "ascii-art-wed/banner"
-	// Ascii "ascii-art-wed/banner"
 )
 
-type Content struct {
-	Message string
-}
-
-// Template to render the form
-var formTemplate = template.Must(template.ParseFiles("form.html"))
-
-func main() {
-	// Define HTTP routes
-	http.HandleFunc("/ascii", form)
-
-	http.HandleFunc("/", Index)
-
-	// Start the HTTP server
-	log.Println("Server running on port 8000")
-	http.ListenAndServe(":8000", nil)
-}
-
-func Index(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("index.html"))
-	// http.ServeFile(w, r, "index.html")
-	tmpl.Execute(w, nil)
-}
-
-func form(w http.ResponseWriter, r *http.Request) {
-	name := r.FormValue("inputText")
-	namebaner := r.FormValue("banner")
-
-	tmpl := template.Must(template.ParseFiles("./form.html"))
-
-	str := strings.Split(name, "\n")
-	var data string
-	for _, wrd := range str {
-		data += Ascii.PrintBanner(wrd, namebaner)
+func indexHanleFunc(w http.ResponseWriter, r *http.Request) {
+	tml, err := template.ParseFiles("template/index.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
-	data = "\n" + data
-	content := Content{Message: data}
-	tmpl.Execute(w, content)
+	err2 := tml.Execute(w, nil)
+	if err2 != nil {
+		http.Error(w, err2.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func submitHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	message := r.FormValue("message")
+	bannerfile := r.FormValue("bannerfile")
+
+	data := strings.Split(message, "\r\n")
+
+	var asciiArt string
+	for _, ch := range data {
+		asciiArt += Ascii.PrintBanner(ch, bannerfile)
+	}
+	fmt.Fprint(w, asciiArt)
+}
+
+func main() {
+	http.HandleFunc("/", indexHanleFunc)
+	http.HandleFunc("/submit", submitHandler)
+	fmt.Println("Server started at http://localhost:8080")
+	err3 := http.ListenAndServe(":8080", nil)
+	if err3 != nil {
+		log.Fatal(err3)
+	}
 }
