@@ -40,9 +40,15 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, asciiArt)
 }
 
+func cssHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "template/styles.css")
+}
+
 func main() {
 	http.HandleFunc("/", indexHanleFunc)
 	http.HandleFunc("/submit", submitHandler)
+	http.HandleFunc("/styles.css", cssHandler)
+
 	fmt.Println("Server started at http://localhost:8080")
 	err3 := http.ListenAndServe(":8080", nil)
 	if err3 != nil {
