@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ascii Art-Web</title>
-    <link rel="stylesheet" href="static/css/styles.css">
+    <title>Ascii Art</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h2>Ascii-Art-web</h2>
-    <form action="/submit" method="POST"> 
+    <h2>Ascii-Art Generator</h2>
+    <form action="/submit" method="post">
         <fieldset>
-            <legend>Ascii-Art-Web Information</legend>
-            <p>You can generate ASCII art structure whether you select a bannerfile or not.If you don't specify one, it will display the standard.txt format as it is the default for this project.</p>
-            <label for="input-text">Input Text:</label>
-            <textarea type="message" id="input-text" name="message" placeholder="Type something" rows="4" cols="50"></textarea><br>
-        </fieldset>
-        <fieldset>
-            <legend>Select Preferred Banner File:</legend>
-            <select name="bannerfile" id="bannerfile">
+            <legend>Enter Your Text</legend>
+            <label for="message">Text:</label>
+            <textarea id="message" name="message" rows="4" placeholder="Type something here..."required></textarea>
+            <label for="bannerfile">Banner File:</label>
+            <select id="bannerfile" name="bannerfile" required>
                 <option value="standard">Standard</option>
                 <option value="shadow">Shadow</option>
                 <option value="thinkertoy">Thinkertoy</option>
             </select>
         </fieldset>
-        <button type="submit">Submit</button>
+        <button type="submit">Generate</button>
     </form>
 </body>
 </html>

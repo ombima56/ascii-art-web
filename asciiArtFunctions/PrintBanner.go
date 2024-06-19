@@ -2,7 +2,6 @@ package Ascii
 
 import (
 	"fmt"
-	"os"
 	"strings"
 )
 
@@ -10,26 +9,22 @@ import (
 func PrintBanner(line, filename string) string {
 	outPut := make([][]string, 8) // Output slice to store the banner lines.
 
-	banner := LoadBanner(filename) // Load the banner characters
+	banner, err := LoadBanner(filename)
+	if err != nil {
+		return fmt.Sprintf("Error loading banner: %v", err)
+	}
 
 	for _, char := range line {
-
 		if char < 32 || char > 126 {
-			fmt.Printf("Character out of range:%q\n", char)
-			os.Exit(1)
+			return fmt.Sprintf("Character out of range: %q\n", char)
 		}
 		if ascii, Ok := banner[char]; Ok {
-
-			// If the character is found, split it into lines and append to the output
 			asciiLines := strings.Split(ascii, "\n")
 			for i := 0; i < len(asciiLines); i++ {
 				outPut[i] = append(outPut[i], asciiLines[i])
 			}
-
 		} else {
-			// If the character is not found, print an error message and continue
-			fmt.Printf("Charachter not found: %q\n", char)
-			continue
+			return fmt.Sprintf("Character not found: %q\n", char)
 		}
 	}
 	result := string('\n')
