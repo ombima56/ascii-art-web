@@ -32,10 +32,10 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	message := r.FormValue("message")
 	bannerfile := r.FormValue("bannerfile")
 
-	data := strings.Split(message, "\r\n")
+	str := strings.Split(message, "\r\n")
 
 	var asciiArt string
-	for _, ch := range data {
+	for _, ch := range str {
 		asciiArt += Ascii.PrintBanner(ch, bannerfile)
 	}
 
@@ -51,10 +51,6 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
-// func cssHandler(w http.ResponseWriter, r *http.Request) {
-// 	http.ServeFile(w, r, "template/styles.css")
-// }
 
 func main() {
 	http.HandleFunc("/", indexHanleFunc)
