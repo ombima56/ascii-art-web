@@ -1,12 +1,13 @@
 package main
 
 import (
-	Ascii "ascii-art-wed/asciiArtFunctions"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"strings"
+
+	Ascii "ascii-art-wed/asciiArtFunctions"
 )
 
 func indexHanleFunc(w http.ResponseWriter, r *http.Request) {
@@ -37,17 +38,29 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	for _, ch := range data {
 		asciiArt += Ascii.PrintBanner(ch, bannerfile)
 	}
-	fmt.Fprint(w, asciiArt)
+
+	tml, err := template.ParseFiles("template/result.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err2 := tml.Execute(w, struct{ AsciiArt string }{AsciiArt: asciiArt})
+	if err2 != nil {
+		http.Error(w, err2.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
-func cssHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "template/styles.css")
-}
+// func cssHandler(w http.ResponseWriter, r *http.Request) {
+// 	http.ServeFile(w, r, "template/styles.css")
+// }
 
 func main() {
 	http.HandleFunc("/", indexHanleFunc)
 	http.HandleFunc("/submit", submitHandler)
-	http.HandleFunc("/styles.css", cssHandler)
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	fmt.Println("Server started at http://localhost:8080")
 	err3 := http.ListenAndServe(":8080", nil)
