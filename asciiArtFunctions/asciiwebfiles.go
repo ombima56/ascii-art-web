@@ -24,6 +24,10 @@ func ServeError(w http.ResponseWriter, status int, errMsg string) {
 }
 
 func IndexHandlerFunc(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		ServeError(w, http.StatusNotFound, "404 Page Not Found")
+		return
+	}
 	tmpl, err := template.ParseFiles("template/index.html")
 	if err != nil {
 		ServeError(w, http.StatusInternalServerError, "Internal Server Error")
