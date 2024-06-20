@@ -1,10 +1,11 @@
 package main
 
 import (
-	Ascii "ascii-art-wed/asciiArtFunctions"
 	"fmt"
 	"log"
 	"net/http"
+
+	Ascii "ascii-art-wed/asciiArtFunctions"
 )
 
 func main() {

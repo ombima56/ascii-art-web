@@ -8,15 +8,15 @@ import (
 func FileCheck(fileName string) (string, error) {
 	var fileSize int64
 
-	file_info, err := os.Stat("./" + fileName + ".txt")
+	file_info, err := os.Stat("./" + fileName)
 	if err != nil {
 		return fileName, err
 	}
 	fileSize = file_info.Size()
 
-	if (fileName == "standard" && fileSize != 6623) ||
-		(fileName == "thinkertoy" && fileSize != 4703) ||
-		(fileName == "shadow" && fileSize != 7463) {
+	if (fileName == "bannerfile/standard.txt" && fileSize != 6623) ||
+		(fileName == "bannerfile/thinkertoy.txt" && fileSize != 5558) ||
+		(fileName == "bannerfile/shadow.txt" && fileSize != 7463) {
 		return fileName, errors.New("the Banner file has been altered: ")
 	}
 

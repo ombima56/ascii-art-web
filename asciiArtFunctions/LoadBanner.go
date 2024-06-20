@@ -14,6 +14,10 @@ func LoadBanner(name string) (map[rune]string, error) {
 	currentChar := rune(32)
 	charLine := []string{}                    // Slice to store lines of the current character
 	filePath := "bannerfile/" + name + ".txt" // Construct the file path
+	_, err := FileCheck(filePath)
+	if err != nil {
+		return nil, err
+	}
 
 	file, err := os.Open(filePath)
 	if err != nil {
