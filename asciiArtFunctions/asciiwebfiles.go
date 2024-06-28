@@ -30,32 +30,32 @@ func IndexHandlerFunc(w http.ResponseWriter, r *http.Request) {
 	}
 	tmpl, err := template.ParseFiles("template/index.html")
 	if err != nil {
-		ServeError(w, http.StatusInternalServerError, "Internal Server Error")
+		ServeError(w, http.StatusInternalServerError, "500 Internal Server Error")
 		return
 	}
 	err = tmpl.Execute(w, nil)
 	if err != nil {
-		ServeError(w, http.StatusInternalServerError, "Internal Server Error")
+		ServeError(w, http.StatusInternalServerError, "500 Internal Server Error")
 		return
 	}
 }
 
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		ServeError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
+		ServeError(w, http.StatusMethodNotAllowed, "405 Method Not Allowed")
 		return
 	}
 
 	// Check if the URL path is exactly "/submit"
 	if r.URL.Path != "/submit" {
-		ServeError(w, http.StatusNotFound, "Page Not Found")
+		ServeError(w, http.StatusNotFound, "404 Page Not Found")
 		return
 	}
 
 	message := r.FormValue("message")
 	bannerfile := r.FormValue("bannerfile")
 	if message == "" || bannerfile == "" {
-		ServeError(w, http.StatusBadRequest, "Bad Request: Missing message or bannerfile")
+		ServeError(w, http.StatusBadRequest, "400 Bad Request: Missing message or bannerfile")
 		return
 	}
 
