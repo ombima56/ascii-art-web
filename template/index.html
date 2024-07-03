@@ -5,22 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ascii Art</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+   
 </head>
 <body>
     <h2>Ascii-Art Generator</h2>
     <form action="/submit" method="post">
-        <fieldset>
-            <legend>Enter Your Text</legend>
-            <label for="message">Text:</label>
-            <textarea id="message" name="message" rows="4" placeholder="Type something here..."required></textarea>
+        <div class="form-section">
+            <label for="message">Write Text:</label>
+            <textarea id="message" name="message" rows="4" placeholder="Type something..." required></textarea>
             <label for="bannerfile">Banner File:</label>
             <select id="bannerfile" name="bannerfile" required>
                 <option value="standard">Standard</option>
                 <option value="shadow">Shadow</option>
                 <option value="thinkertoy">Thinkertoy</option>
             </select>
-        </fieldset>
+        </div>
         <button type="submit">Generate</button>
     </form>
+
+    <div class="dev">
+        <h3>Prepared by:</h3>
+        <img src="https://learn.zone01kisumu.ke/git/avatars/5ca9b4e3df63938ac061645f6ae71971?size=870" alt="Hillary Ombima">
+        <p>Hillary Ombima</p>
+    </div>
+    <footer>
+        <a href="https://github.com/ombima56" target="_blank">
+            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
+        </a>
+    </footer>
 </body>
 </html>
