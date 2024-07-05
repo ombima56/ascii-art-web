@@ -1,19 +1,71 @@
-# ascii-art-web 
-# About
+# Ascii-Art-Web
 
-Ascii Art-Web is a web-based application that allows users to generate ASCII art from text input. The project aims to provide a simple and intuitive interface for creating ASCII art banners using various banner styles.
+Ascii-Art-Web is a web application that converts text into ASCII art using different banner styles. This project aims to provide an engaging, interactive, and intuitive user experience.
 
-## Project Description:
-The objective of Ascii Art-Web is to offer users a convenient way to generate ASCII art from plain text. Users can input their desired text, select a preferred banner style, and submit the form to generate the ASCII art output. The project is implemented using HTML, CSS, and Go programming language.
+## Project Files
+### asciiArtFunctions/
 
-## Usage:
-To use Ascii Art-Web, simply navigate to the web application in your browser. Enter your desired text in the input field, select a banner style from the dropdown menu, and click the "Submit" button. The generated ASCII art will be displayed below the form.
+- **asciiwebfiles.go:** Contains the main logic for ASCII art conversion.
+- **file_check.go:** Handles file existence and validation.
+- **loadbanner.go:** Loads banner files into the application.
+- **printbanner.go:** Prints the loaded text in ASCII art format.
 
-## Implementation Details:
-Ascii Art-Web follows a client-server architecture, where the front end is implemented using HTML and CSS, and the back end is developed using the Go programming language. The server handles form submissions and generates ASCII art using predefined banner styles.
+### bannerfiles/
 
-## Future Enhancements:
-In future versions of Ascii Art-Web, we plan to add additional banner styles, improve the user interface, and optimize the performance of the application. We welcome feedback from users and contributors to help shape the direction of the project.
+- **shadow.txt:** Contains the Shadow banner style.
+- **standard.txt:** Contains the Standard banner style.
+- **thinkertoy.txt:** Contains the Thinkertoy banner style.
 
-## Conclusion:
-Ascii Art-Web provides a simple yet powerful tool for generating ASCII art from text input. With its intuitive interface and robust functionality, it offers users a fun and creative way to generate ASCII art banners. We look forward to further developing and enhancing the project in collaboration with the community.
+### static/css/
+
+- **style.css:** Stylesheet for the web application.
+
+### template/
+
+- **index.html:** Main HTML template for the input page.
+- **result.html:** HTML template for displaying the conversion result.
+
+### main.go
+- The main entry point of the application. It initializes the server, sets up the routes, and starts listening for incoming requests.
+
+## Features
+
+* Multiple Banner Styles: Choose from different banner styles such as Shadow, Standard, and Thinkertoy.
+* Real-time Conversion: Convert text to ASCII art instantly.
+* Responsive Design: A user-friendly interface that works on all devices.
+
+### Installation
+
+* Clone the repository:
+
+```sh
+git clone https://github.com/ombima56/ascii-art-web.git
+cd ascii-art-web
+```
+### Install dependencies:
+
+```sh
+go mod tidy
+```
+Run the application:
+
+```sh
+go run `main.go`
+```
+or
+```sh
+go run .
+```
+## Usage
+
+* Open your web browser and go to `http://localhost:8080`.
+* Enter the text you want to convert in the input field.
+* Select a banner style from the options.
+* Click the "generate" button to see the ASCII art.
+
+## Contributing
+
+Contributions are welcome! Please fork this repository and submit a pull request for any improvements.
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
