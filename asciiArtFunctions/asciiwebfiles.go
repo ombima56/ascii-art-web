@@ -1,61 +1,44 @@
 package Ascii
 
 import (
-	"log"
 	"net/http"
 	"strings"
 	"text/template"
 )
 
-// ServeError serves a custom error page
-func ServeError(w http.ResponseWriter, status int, errMsg string) {
-	w.WriteHeader(status)
-	tmpl, err := template.ParseFiles("template/error.html")
-	if err != nil {
-		log.Printf("Error loading error page template: %v", err)
-		http.Error(w, "Error loading error page", http.StatusInternalServerError)
-		return
-	}
-	err = tmpl.Execute(w, struct{ ErrorMessage string }{ErrorMessage: errMsg})
-	if err != nil {
-		log.Printf("Error rendering error page template: %v", err)
-		http.Error(w, "Error rendering error page", http.StatusInternalServerError)
-	}
-}
-
 func IndexHandlerFunc(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
-		ServeError(w, http.StatusNotFound, "404 Page Not Found")
+		http.Error(w, "404 Page Not Found", http.StatusNotFound)
 		return
 	}
 	tmpl, err := template.ParseFiles("template/index.html")
 	if err != nil {
-		ServeError(w, http.StatusInternalServerError, "500 Internal Server Error")
+		http.Error(w, "500 Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 	err = tmpl.Execute(w, nil)
 	if err != nil {
-		ServeError(w, http.StatusInternalServerError, "500 Internal Server Error")
+		http.Error(w, "500 Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 }
 
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		ServeError(w, http.StatusMethodNotAllowed, "405 Method Not Allowed")
+		http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	// Check if the URL path is exactly "/submit"
 	if r.URL.Path != "/submit" {
-		ServeError(w, http.StatusNotFound, "404 Page Not Found")
+		http.Error(w, "404 Page Not Found", http.StatusNotFound)
 		return
 	}
 
 	message := r.FormValue("message")
 	bannerfile := r.FormValue("bannerfile")
 	if message == "" || bannerfile == "" {
-		ServeError(w, http.StatusBadRequest, "400 Bad Request: Missing message or bannerfile")
+		http.Error(w, "400 Bad Request: Missing message or bannerfile", http.StatusBadRequest)
 		return
 	}
 
@@ -67,13 +50,13 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl, err := template.ParseFiles("template/result.html")
 	if err != nil {
-		ServeError(w, http.StatusInternalServerError, "Internal Server Error")
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
 	err = tmpl.Execute(w, struct{ AsciiArt string }{AsciiArt: asciiArt})
 	if err != nil {
-		ServeError(w, http.StatusInternalServerError, "Internal Server Error")
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 }
